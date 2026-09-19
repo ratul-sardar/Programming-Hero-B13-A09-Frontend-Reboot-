@@ -1,4 +1,9 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { getCars } from "@/app/api/cars.api";
 import PrimaryCta from "@/components/shared/CTA Buttons/PrimaryCTA/PrimaryCta";
+import LoadingSpinner from "@/components/shared/Loading Spinner/LoadingSpinner";
 
 type carsType = {
 	_id: string;
@@ -16,9 +21,32 @@ type carsType = {
 	updatedAt: string;
 };
 
-export default async function ExploreCars() {
-	const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/cars`);
-	const cars = await res.json();
+export default function ExploreCars() {
+	// Filter states
+	const [type, setType] = useState("");
+	const [search, setSearch] = useState("");
+
+	//
+	const [loading, setLoading] = useState(false);
+	const [cars, setCars] = useState<carsType[]>([]);
+
+	useEffect(() => {
+		setLoading(true);
+		async function getCarsUse() {
+			try {
+				const cars = await getCars(search, type);
+
+				setCars(cars);
+				setLoading(false);
+			} catch (err) {
+				console.log(`error loading cars data, error details : ${err}`);
+				setCars([]);
+				setLoading(false);
+			}
+		}
+
+		getCarsUse();
+	}, [search, type]);
 
 	return (
 		<section className="">
@@ -26,7 +54,12 @@ export default async function ExploreCars() {
 				<h1 className="">hello darkness my old friend!</h1>
 
 				<section className="flex flex-col gap-3">
-					{cars.map((car: carsType) => carsPlaceholder(car))}
+					{loading ? (
+						<LoadingSpinner />
+					) : (
+						cars.map((car: carsType) => carsPlaceholder(car))
+					)}
+					{/*{cars.map((car: carsType) => carsPlaceholder(car))}*/}
 				</section>
 			</div>
 		</section>
