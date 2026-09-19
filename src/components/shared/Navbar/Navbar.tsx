@@ -2,18 +2,16 @@
 
 import { Button } from "@heroui/react";
 import { Menu, X } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import avatar from "@/assets/user.png";
 import PrimaryCta from "../CTA Buttons/PrimaryCTA/PrimaryCta";
 import SecondaryCta from "../CTA Buttons/SecondaryCta/SecondaryCta";
 
 const links = [
 	{ label: "Home", href: "/" },
 	{ label: "Explore Cars", href: "/explore-cars" },
-	{ label: "Add Car", href: "/add-cars" },
+	{ label: "Add Car", href: "/add-car" },
 	{ label: "My Bookings", href: "/my-bookings" },
 ];
 
@@ -21,7 +19,7 @@ export function Navbar() {
 	// State for the mobile navbar
 	const [open, setOpen] = useState(false);
 	// Toggle Profile Dropdown
-	const [showProfile, setShowProfile] = useState(true);
+	const [showProfile, setShowProfile] = useState(false);
 	// Next.js useRouter() Hook
 	const nextRouter = useRouter();
 
@@ -53,6 +51,13 @@ export function Navbar() {
 				<div className="hidden relative text-sm font-semibold items-center gap-3 lg:flex">
 					<CtaButtons />
 
+					<Button
+						type="button"
+						variant="secondary"
+						onClick={() => setShowProfile(!showProfile)}
+					>
+						profile
+					</Button>
 					{/* Profile details modal*/}
 					{showProfile && (
 						<div className="absolute top-[172%] right-[2%] w-[200px] bg-white p-6 rounded-(--field-radius) flex flex-col gap-3 ">
@@ -121,15 +126,27 @@ function UserInfo({ setShowProfile, onDesktop = true, nextRouter }) {
 		<>
 			{onDesktop && (
 				<>
-					<Link href={`/add-cars`} className="hover:text-accent">
+					<Link
+						href={`/add-car`}
+						onClick={() => setShowProfile(false)}
+						className="hover:text-accent"
+					>
 						Add Car
 					</Link>
-					<Link href={`/my-bookings`} className="hover:text-accent">
+					<Link
+						href={`/my-bookings`}
+						onClick={() => setShowProfile(false)}
+						className="hover:text-accent"
+					>
 						My Bookings
 					</Link>
 				</>
 			)}
-			<Link href={`/my-added-cars`} className="hover:text-accent">
+			<Link
+				href={`/my-added-cars`}
+				onClick={() => setShowProfile(false)}
+				className="hover:text-accent"
+			>
 				My Added Cars
 			</Link>
 
