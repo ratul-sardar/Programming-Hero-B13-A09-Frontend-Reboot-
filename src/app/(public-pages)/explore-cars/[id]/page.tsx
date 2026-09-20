@@ -23,6 +23,8 @@ export default async function CarDetails({ params }: paramsType) {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/cars/${id}`);
 	const car: carsType = await res.json();
 
+	console.log(car);
+
 	return (
 		<section className="">
 			<div className="cssContainer">

@@ -1,25 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getCars } from "@/app/api/cars.api";
+import { carsType, getCars } from "@/app/api/cars.api";
 import PrimaryCta from "@/components/shared/CTA Buttons/PrimaryCTA/PrimaryCta";
 import LoadingSpinner from "@/components/shared/Loading Spinner/LoadingSpinner";
-
-type carsType = {
-	_id: string;
-	name: string;
-	dailyPrice: string;
-	type: string;
-	imageURL: string;
-	seatCapacity: string;
-	pickupLocation: string;
-	description: string;
-	availability: boolean;
-	bookingCount: number;
-	owner: string;
-	createdAt: string;
-	updatedAt: string;
-};
 
 export default function ExploreCars() {
 	// Filter states
