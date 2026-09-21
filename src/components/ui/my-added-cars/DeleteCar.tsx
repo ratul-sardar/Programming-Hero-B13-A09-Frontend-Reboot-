@@ -2,7 +2,7 @@
 
 import { TrashBin } from "@gravity-ui/icons";
 import { Button, Modal } from "@heroui/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { deleteCar } from "@/app/api/cars.api";
 
 type propsType = {
@@ -15,7 +15,7 @@ export default function DeleteCar({ id, children }: propsType) {
 
 	async function deleteThisCar(id: string) {
 		deleteCar(id);
-		router.reload();
+		router.refresh();
 	}
 
 	return (
