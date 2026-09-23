@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
 import PrimaryCta from "../CTA Buttons/PrimaryCTA/PrimaryCta";
 import SecondaryCta from "../CTA Buttons/SecondaryCta/SecondaryCta";
 
@@ -154,6 +155,14 @@ function UserInfo({ setShowProfile, onDesktop = true, nextRouter }) {
 				variant="danger-soft"
 				onClick={async () => {
 					setShowProfile(false);
+
+					await authClient.signOut({
+						fetchOptions: {
+							onSuccess: () => {
+								nextRouter.push("/login"); // redirect to login page
+							},
+						},
+					});
 				}}
 			>
 				Logout
