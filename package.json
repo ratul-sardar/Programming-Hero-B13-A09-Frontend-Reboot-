@@ -10,9 +10,11 @@
 		"format": "biome format --write"
 	},
 	"dependencies": {
+		"@better-auth/mongo-adapter": "^1.7.5",
 		"@gravity-ui/icons": "^2.22.0",
 		"@heroui/react": "^3.2.6",
 		"@heroui/styles": "^3.2.6",
+		"better-auth": "^1.7.5",
 		"lucide-react": "^1.47.0",
 		"mongodb": "^7.6.0",
 		"motion": "^13.4.0",
