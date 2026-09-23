@@ -13,7 +13,7 @@ export default async function MyAddedCars() {
 		<section className="">
 			<div className="cssContainer flex flex-col gap-6">
 				<h1 className="text-center font-bold text-4xl">My added cars</h1>
-				<section className="flex flex-col gap-3">
+				<section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
 					{cars.map((car: carsType) => (
 						<Card
 							key={`${car?._id}`}

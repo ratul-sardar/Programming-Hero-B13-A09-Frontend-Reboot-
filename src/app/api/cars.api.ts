@@ -44,7 +44,7 @@ export const getUserAddedCars = async (userId: string) => {
 		if (!res.ok) {
 			throw new Error(`cars.api.ts response was not ok :(`);
 		}
-		const cars: carsType = await res.json();
+		const cars: carsType[] = await res.json();
 
 		return cars;
 	} catch (error) {
