@@ -10,10 +10,10 @@ const MyBookings = async () => {
     <section className="">
       <div className="cssContainer flex flex-col items-center justify-center gap-8">
         <h1 className="">My Bookings</h1>
-        <section className="w-full flex flex-wrap gap-3">
+        <section className="w-full flex flex-wrap items-center  gap-3">
           {bookings.map((booking) => (
-            <Card key={booking._id} className="w-full md:w-1/3 lg:w-1/4">
-              <div className="relative h-auto w-full   overflow-hidden rounded-2xl">
+            <Card key={booking._id} className="w-full md:max-w-1/3 lg:w-1/4">
+              <div className="relative h-auto w-full overflow-hidden rounded-2xl">
                 <Image
                   src={booking.carDetails.imageURL}
                   alt="Car Image"
