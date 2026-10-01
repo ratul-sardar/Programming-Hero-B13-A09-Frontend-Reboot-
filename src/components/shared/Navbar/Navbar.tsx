@@ -3,13 +3,13 @@
 import { Button } from "@heroui/react";
 import { Menu, X } from "lucide-react";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import PrimaryCta from "../CTA Buttons/PrimaryCTA/PrimaryCta";
 import SecondaryCta from "../CTA Buttons/SecondaryCta/SecondaryCta";
-import Image from "next/image";
 
 const links = [
   { label: "Home", href: "/" },
@@ -24,11 +24,7 @@ export function Navbar() {
   // Toggle Profile Dropdown
   const [showProfile, setShowProfile] = useState(false);
 
-  const {
-    data: session,
-    isPending, //loading state
-    error, //error object
-  } = authClient.useSession();
+  const { data: session } = authClient.useSession();
 
   const nextRouter = useRouter();
 
@@ -65,7 +61,7 @@ export function Navbar() {
               onClick={() => setShowProfile(!showProfile)}
             >
               <Image
-                src={session?.user.image}
+                src={session?.user.image as string}
                 alt="user avatar"
                 width={40}
                 height={40}
