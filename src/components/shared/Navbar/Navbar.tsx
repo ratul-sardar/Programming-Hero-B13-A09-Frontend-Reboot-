@@ -9,6 +9,7 @@ import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import PrimaryCta from "../CTA Buttons/PrimaryCTA/PrimaryCta";
 import SecondaryCta from "../CTA Buttons/SecondaryCta/SecondaryCta";
+import Image from "next/image";
 
 const links = [
   { label: "Home", href: "/" },
@@ -22,7 +23,13 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   // Toggle Profile Dropdown
   const [showProfile, setShowProfile] = useState(false);
-  // Next.js useRouter() Hook
+
+  const {
+    data: session,
+    isPending, //loading state
+    error, //error object
+  } = authClient.useSession();
+
   const nextRouter = useRouter();
 
   return (
@@ -51,15 +58,24 @@ export function Navbar() {
 
         {/* Cta*/}
         <div className="hidden relative text-sm font-semibold items-center gap-3 lg:flex">
-          <CtaButtons />
+          {session ? (
+            <button
+              type="button"
+              className="cursor-pointer rounded-full border border-accent"
+              onClick={() => setShowProfile(!showProfile)}
+            >
+              <Image
+                src={session?.user.image}
+                alt="user avatar"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
+            </button>
+          ) : (
+            <CtaButtons />
+          )}
 
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={() => setShowProfile(!showProfile)}
-          >
-            profile
-          </Button>
           {/* Profile details modal*/}
           {showProfile && (
             <div className="absolute top-[172%] right-[2%] w-50 bg-white p-6 rounded-(--field-radius) flex flex-col gap-3 ">
