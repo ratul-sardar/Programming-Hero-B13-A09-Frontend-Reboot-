@@ -3,16 +3,31 @@
 import { useEffect, useState } from "react";
 import type { carsType } from "@/app/api/cars.api";
 import { getCars } from "@/app/api/cars.api";
-import PrimaryCta from "@/components/shared/CTA Buttons/PrimaryCTA/PrimaryCta";
 import LoadingSpinner from "@/components/shared/Loading Spinner/LoadingSpinner";
 import CarCard from "@/components/ui/explore-cars/CarCard";
+import TypeFilter from "@/components/ui/explore-cars/TypeFilter";
 
 export default function ExploreCars() {
   // Filter states
   const [type, setType] = useState("");
   const [search, setSearch] = useState("");
 
-  //
+  const [carFilterTypes, setCarFilterTypes] = useState<string[]>([]);
+  useEffect(() => {
+    async function getCarsTypes() {
+      try {
+        const cars = await getCars();
+        const carTypes = cars.map((car) => car.type);
+        setCarFilterTypes([...new Set(carTypes)]);
+      } catch (err) {
+        console.log(`error loading cars data, error details : ${err}`);
+      }
+    }
+
+    getCarsTypes();
+  }, []);
+
+  // Data fetching and loading
   const [loading, setLoading] = useState(false);
   const [cars, setCars] = useState<carsType[]>([]);
 
@@ -40,8 +55,31 @@ export default function ExploreCars() {
         <h1 className="">hello darkness my old friend!</h1>
 
         <section className="flex gap-6">
-          <div className="w-[20%]">hi</div>
-          <div className="w-[80%] grid grid-cols-3 gap-4">
+          {/* Filter side */}
+          <div className="w-[20%] flex flex-col gap-8">
+            <div className="flex flex-col justify-center items-start gap-2">
+              <input type="text" className="border border-gray-500"></input>
+              <button
+                type="submit"
+                className="bg-green-500 px-5 py-1.5 rounded-full text-white"
+              >
+                Search
+              </button>
+            </div>
+
+            <div className="flex items-center justify-start gap-4 flex-wrap">
+              {carFilterTypes.map((type: string) => (
+                <TypeFilter
+                  key={type}
+                  setType={setType}
+                  type={type}
+                ></TypeFilter>
+              ))}
+            </div>
+          </div>
+
+          {/* Cars Listing */}
+          <div className="w-[80%] h-fit grid grid-cols-3 gap-4">
             {loading ? (
               <LoadingSpinner />
             ) : (

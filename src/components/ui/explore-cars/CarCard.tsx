@@ -29,13 +29,23 @@ export default function CarCard({
       {/* Image and badge */}
       <div className="relative h-fit w-full overflow-hidden rounded-2xl mb-3">
         <div className="absolute top-2 right-2 ">
-          <Chip
-            color="success"
-            variant="primary"
-            className="text-white px-2 py-1 rounded-md"
-          >
-            Available
-          </Chip>
+          {availability ? (
+            <Chip
+              color="success"
+              variant="primary"
+              className="text-white px-2 py-1 rounded-md"
+            >
+              Available
+            </Chip>
+          ) : (
+            <Chip
+              color="danger"
+              variant="primary"
+              className="text-white px-2 py-1 rounded-md"
+            >
+              Unavailable
+            </Chip>
+          )}
         </div>
 
         <Image
@@ -54,9 +64,7 @@ export default function CarCard({
           <Card.Title>
             <span className="text-lg font-semibold">{name}</span>
           </Card.Title>
-          <Card.Description>
-            <p className="text-sm text-muted-foreground">{type}</p>
-          </Card.Description>
+          <Card.Description>{type}</Card.Description>
         </div>
       </Card.Header>
       <Card.Content className="mb-3">
@@ -77,7 +85,7 @@ export default function CarCard({
       <Card.Footer>
         <PrimaryCta
           link={`/explore-cars/${_id}`}
-          className="py-2 "
+          className="py-2"
           fullWidth={true}
         >
           More Details
