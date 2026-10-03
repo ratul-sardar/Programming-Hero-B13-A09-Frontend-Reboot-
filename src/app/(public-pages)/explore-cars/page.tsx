@@ -67,14 +67,13 @@ export default function ExploreCars() {
               </button>
             </div>
 
-            <div className="flex items-center justify-start gap-4 flex-wrap">
-              {carFilterTypes.map((type: string) => (
-                <TypeFilter
-                  key={type}
-                  setType={setType}
-                  type={type}
-                ></TypeFilter>
-              ))}
+            <div className="flex flex-col items-start justify-center gap-1.5">
+              <TypeFilter
+                key={type}
+                active={type}
+                setType={setType}
+                carFilterTypes={carFilterTypes}
+              ></TypeFilter>
             </div>
           </div>
 
