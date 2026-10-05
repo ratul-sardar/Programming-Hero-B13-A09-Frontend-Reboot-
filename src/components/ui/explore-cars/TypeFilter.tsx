@@ -3,7 +3,7 @@ import { Trash } from "lucide-react";
 type props = {
   active: string;
   carFilterTypes: string[];
-  setType: any;
+  setType: (type: string) => void;
 };
 
 const activeStyle = "border-gray-950 bg-gray-950 text-white";
@@ -13,42 +13,26 @@ const inActiveStyle =
 export default function TypeFilter({ active, carFilterTypes, setType }: props) {
   return (
     <>
-      <div className="flex items-center justify-center gap-1.5 mb-3">
-        <input
-          type="checkbox"
-          name="type"
-          className="hidden"
-          id="reset"
-          value="reset"
-          onChange={() => setType("")}
-        />
-        <label
-          htmlFor="reset"
-          className={`w-full cursor-pointer flex gap-1  text-sm border py-1 px-2 rounded-full bg-red-500 text-red-100 border-red-500 hover:bg-red-400 transition-all duration-400 ease-in-out"`}
-        >
-          <Trash size={16}></Trash>
-          Reset Filter
-        </label>
-      </div>
-
-      {carFilterTypes.map((type) => (
-        <div key={type} className="flex items-center justify-center gap-1.5">
-          <input
-            type="checkbox"
-            name="type"
-            className="hidden"
-            id={type}
-            value={type}
-            onChange={() => setType(type)}
-          />
-          <label
-            htmlFor={type}
-            className={`w-full cursor-pointer text-sm border py-1 px-2 rounded-full ${active === type ? activeStyle : inActiveStyle}`}
+      <button
+        type="button"
+        onClick={() => setType("")}
+        className="w-full cursor-pointer flex items-center justify-center gap-1 text-sm border py-1 px-2 rounded-full bg-red-500 text-red-100 border-red-500 hover:bg-red-400 transition-all duration-400 ease-in-out"
+      >
+        <Trash size={16}></Trash>
+        Reset Filter
+      </button>
+      <div className="w-full h-fit flex lg:flex-col max-lg:flex-wrap items-start justify-center gap-1.5">
+        {carFilterTypes.map((type) => (
+          <button
+            key={type}
+            type="button"
+            onClick={() => setType(type)}
+            className={`w-fit lg:w-full shrink-0 cursor-pointer text-sm border py-1 px-2 rounded-full ${active === type ? activeStyle : inActiveStyle}`}
           >
             {type}
-          </label>
-        </div>
-      ))}
+          </button>
+        ))}
+      </div>
     </>
   );
 }

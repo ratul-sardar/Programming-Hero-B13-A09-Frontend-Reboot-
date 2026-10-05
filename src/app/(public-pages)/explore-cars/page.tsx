@@ -5,6 +5,7 @@ import type { carsType } from "@/app/api/cars.api";
 import { getCars } from "@/app/api/cars.api";
 import LoadingSpinner from "@/components/shared/Loading Spinner/LoadingSpinner";
 import CarCard from "@/components/ui/explore-cars/CarCard";
+import HeroSection from "@/components/ui/explore-cars/HeroSection/HeroSection";
 import TypeFilter from "@/components/ui/explore-cars/TypeFilter";
 
 export default function ExploreCars() {
@@ -50,26 +51,33 @@ export default function ExploreCars() {
   }, [search, type]);
 
   return (
-    <section className="">
-      <div className="cssContainer">
-        <h1 className="">hello darkness my old friend!</h1>
+    <div className="flex flex-col gap-8">
+      {/* Hero Section */}
+      <HeroSection />
 
-        <section className="flex gap-6">
+      {/* Filters + Car Listing */}
+      <div id="fleet" className="cssContainer flex flex-col gap-8">
+        <section className="flex flex-col gap-8 lg:flex-row lg:gap-6">
           {/* Filter side */}
-          <div className="w-[20%] flex flex-col gap-8">
+          <div className="w-full lg:w-[20%] flex flex-col gap-8">
             <div className="flex flex-col justify-center items-start gap-2">
-              <input type="text" className="border border-gray-500"></input>
-              <button
-                type="submit"
-                className="bg-green-500 px-5 py-1.5 rounded-full text-white"
+              <label
+                htmlFor="search"
+                className="text-sm font-medium text-muted-foreground"
               >
-                Search
-              </button>
+                Search cars
+              </label>
+              <input
+                id="search"
+                type="text"
+                placeholder="Search by name..."
+                className="w-full rounded-(--field-radius) border border-border bg-field-background px-3 py-2 text-sm text-field-foreground placeholder:text-field-placeholder focus:outline-none focus:ring-2 focus:ring-focus"
+                onChange={(e) => setSearch(e.target.value)}
+              ></input>
             </div>
 
             <div className="flex flex-col items-start justify-center gap-1.5">
               <TypeFilter
-                key={type}
                 active={type}
                 setType={setType}
                 carFilterTypes={carFilterTypes}
@@ -78,27 +86,43 @@ export default function ExploreCars() {
           </div>
 
           {/* Cars Listing */}
-          <div className="w-[80%] h-fit grid grid-cols-3 gap-4">
+          <div className="w-full lg:w-[80%] h-fit">
             {loading ? (
-              <LoadingSpinner />
+              <div className="flex items-center justify-center min-h-60">
+                <LoadingSpinner />
+              </div>
+            ) : cars.length === 0 ? (
+              <div className="flex flex-col items-center justify-center gap-3 min-h-60 text-center">
+                <p className="text-lg font-medium">No cars found</p>
+                <p className="text-sm text-muted-foreground">
+                  Try adjusting your search or filters.
+                </p>
+              </div>
             ) : (
-              cars.map((car: carsType) => (
-                <CarCard
-                  key={car._id}
-                  _id={car._id}
-                  name={car.name}
-                  dailyPrice={car.dailyPrice}
-                  type={car.type}
-                  imageURL={car.imageURL}
-                  seatCapacity={car.seatCapacity}
-                  pickupLocation={car.pickupLocation}
-                  availability={car.availability}
-                ></CarCard>
-              ))
+              <>
+                <p className="mb-4 text-sm text-muted-foreground">
+                  Showing {cars.length} {cars.length === 1 ? "car" : "cars"}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {cars.map((car: carsType) => (
+                    <CarCard
+                      key={car._id}
+                      _id={car._id}
+                      name={car.name}
+                      dailyPrice={car.dailyPrice}
+                      type={car.type}
+                      imageURL={car.imageURL}
+                      seatCapacity={car.seatCapacity}
+                      pickupLocation={car.pickupLocation}
+                      availability={car.availability}
+                    ></CarCard>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         </section>
       </div>
-    </section>
+    </div>
   );
 }
