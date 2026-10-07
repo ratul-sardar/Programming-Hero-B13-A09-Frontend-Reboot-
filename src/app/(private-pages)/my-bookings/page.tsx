@@ -1,53 +1,118 @@
 import { Card } from "@heroui/react";
+import { CalendarDays, CarFront } from "lucide-react";
+import { headers } from "next/headers";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import type { BookingType } from "@/app/api/bookings.api";
 import { getBookedCars } from "@/app/api/bookings.api";
+import PrimaryCta from "@/components/shared/CTA Buttons/PrimaryCTA/PrimaryCta";
+import { auth } from "@/lib/auth";
 
 const MyBookings = async () => {
-  const bookings: BookingType[] = await getBookedCars("ratul");
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) notFound();
+
+  const bookings = await getBookedCars(session.user.id);
+  const newestFirstBookings = [...bookings].sort(
+    (first, second) =>
+      new Date(second.bookingDate).getTime() -
+      new Date(first.bookingDate).getTime(),
+  );
 
   return (
-    <section className="">
-      <div className="cssContainer flex flex-col items-center justify-center gap-8">
-        <h1 className="">My Bookings</h1>
-        <section className="w-full flex flex-wrap items-center  gap-3">
-          {bookings.map((booking) => (
-            <Card key={booking._id} className="w-full md:max-w-1/3 lg:w-1/4">
-              <div className="relative h-auto w-full overflow-hidden rounded-2xl">
-                <Image
-                  src={booking.carDetails.imageURL}
-                  alt="Car Image"
-                  width={400}
-                  height={400}
-                  className="pointer-events-none h-full w-full object-contain select-none"
-                  loading="lazy"
-                ></Image>
-              </div>
-              <div className="flex flex-1 flex-col gap-3">
-                <Card.Header className="gap-1">
-                  <Card.Title className="pe-8">
-                    {booking.carDetails.name}
-                  </Card.Title>
-                  <Card.Description>{booking.carDetails.type}</Card.Description>
-                </Card.Header>
-                <Card.Footer className="mt-auto flex w-full flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium text-foreground">
-                      Total Price: {booking.carDetails.dailyPrice}
-                    </span>
-                    <span className="text-xs text-muted">
-                      Booking Date: {booking.bookingDate}
-                    </span>
-                  </div>
-                  {/* Add other UI info in the card */}
-                </Card.Footer>
-              </div>
-            </Card>
-          ))}
-        </section>
+    <section className="bg-background">
+      <div className="cssContainer flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">
+            Your rentals
+          </p>
+          <h1 className="text-3xl font-black tracking-tight md:text-4xl">
+            My Bookings
+          </h1>
+          <p className="text-muted-foreground">
+            View your booked cars, with your most recent booking first.
+          </p>
+        </div>
+
+        {newestFirstBookings.length === 0 ? (
+          <section className="flex min-h-80 flex-col items-center justify-center gap-5 rounded-3xl border border-dashed border-border bg-surface-secondary px-6 text-center">
+            <span className="rounded-full bg-accent/10 p-4 text-accent">
+              <CarFront className="size-8" />
+            </span>
+            <div className="space-y-2">
+              <h2 className="text-xl font-bold">No bookings yet</h2>
+              <p className="max-w-md text-sm text-muted-foreground">
+                Your booked cars will appear here. Explore the fleet to find the
+                right car for your next journey.
+              </p>
+            </div>
+            <PrimaryCta link="/explore-cars" className="" fullWidth={false}>
+              Explore Cars
+            </PrimaryCta>
+          </section>
+        ) : (
+          <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {newestFirstBookings.map((booking: BookingType) => (
+              <Card
+                key={booking._id}
+                className="flex h-full w-full flex-col overflow-hidden"
+              >
+                <div className="relative aspect-4/3 w-full overflow-hidden bg-surface-secondary">
+                  <Image
+                    src={booking.carDetails.imageURL}
+                    alt={booking.carDetails.name}
+                    width={600}
+                    height={450}
+                    className="h-full w-full object-contain p-2"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div className="flex flex-1 flex-col gap-4">
+                  <Card.Header className="gap-1">
+                    <Card.Title className="text-xl">
+                      {booking.carDetails.name}
+                    </Card.Title>
+                    <Card.Description>
+                      {booking.carDetails.type}
+                    </Card.Description>
+                  </Card.Header>
+
+                  <Card.Footer className="mt-auto flex flex-col items-start gap-3 border-t border-border pt-4">
+                    <p className="text-lg font-bold">
+                      ${booking.carDetails.dailyPrice}
+                      <span className="ml-1 text-sm font-normal text-muted-foreground">
+                        per day
+                      </span>
+                    </p>
+                    <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <CalendarDays className="size-4 text-accent" />
+                      Booked {formatBookingDate(booking.bookingDate)}
+                    </p>
+                  </Card.Footer>
+                </div>
+              </Card>
+            ))}
+          </section>
+        )}
       </div>
     </section>
   );
 };
+
+function formatBookingDate(bookingDate: string) {
+  const date = new Date(bookingDate);
+
+  if (Number.isNaN(date.getTime())) return bookingDate;
+
+  return new Intl.DateTimeFormat("en", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+}
 
 export default MyBookings;

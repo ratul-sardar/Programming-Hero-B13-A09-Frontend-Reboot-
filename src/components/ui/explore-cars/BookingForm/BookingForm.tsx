@@ -14,7 +14,7 @@ type BookingDialogProps = {
 	car: carsType;
 	close: () => void;
 	userId: string;
-	router?: AppRouterInstance;
+	router: AppRouterInstance;
 };
 
 type BookingFormProps = {
