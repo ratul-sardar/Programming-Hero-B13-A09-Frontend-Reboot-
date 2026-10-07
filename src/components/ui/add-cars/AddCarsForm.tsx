@@ -21,14 +21,16 @@ const carTypes = ["SUV", "Sedan", "Hatchback", "Luxury", "Sports"];
 export default function AddCarsForm() {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
 
     try {
       await addCar(formData);
       toast.success("Car added successfully!");
-      event.currentTarget.reset();
+      form.reset();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to add car");
+      console.log(error);
     }
   }
 

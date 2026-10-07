@@ -1,12 +1,17 @@
 "use server";
 
+import { headers } from "next/headers";
+import { auth } from "../auth";
+
 export async function addCar(formData: FormData) {
 	const form = Object.fromEntries(formData);
 	const now = new Date().toISOString();
 
-	// Owner/ the person who added the car in the data
-	// const owner = session.user.id;
-	const owner = "ratul";
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
+
+	const owner = session?.user?.id as string;
 
 	const payload = {
 		...form,
