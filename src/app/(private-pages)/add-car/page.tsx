@@ -36,7 +36,7 @@ export default function AddCars() {
             <span className="w-fit rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-semibold text-accent">
               List with DriveFleet
             </span>
-            <h1 className="text-4xl font-black leading-tight tracking-tight md:text-5xl">
+            <h1 className="max-w-xl">
               Turn your car into your next opportunity.
             </h1>
             <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
@@ -52,7 +52,7 @@ export default function AddCars() {
                   <Icon className="size-5" />
                 </span>
                 <div>
-                  <h2 className="font-bold">{title}</h2>
+                  <h2 className="card-title">{title}</h2>
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     {description}
                   </p>
@@ -72,7 +72,7 @@ export default function AddCars() {
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">
               Vehicle information
             </p>
-            <h2 className="mt-2 text-2xl font-bold">Create your listing</h2>
+            <h2 className="card-title mt-2">Create your listing</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Fields marked required are needed before your car can be listed.
             </p>

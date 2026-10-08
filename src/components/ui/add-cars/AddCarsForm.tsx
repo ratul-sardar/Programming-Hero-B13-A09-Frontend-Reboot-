@@ -39,7 +39,7 @@ export default function AddCarsForm() {
       <div className="flex w-full flex-col gap-4">
         <div className="flex items-center gap-2">
           <CarFront className="size-5 text-accent" />
-          <h3 className="font-bold">Car details</h3>
+          <h3 className="card-title">Car details</h3>
         </div>
 
         <div className="grid w-full gap-4 md:grid-cols-2">
@@ -108,7 +108,7 @@ export default function AddCarsForm() {
       <div className="flex w-full flex-col gap-4">
         <div className="flex items-center gap-2">
           <ImageIcon className="size-5 text-accent" />
-          <h3 className="font-bold">Listing information</h3>
+          <h3 className="card-title">Listing information</h3>
         </div>
 
         <TextField isRequired name="imageURL" type="url">

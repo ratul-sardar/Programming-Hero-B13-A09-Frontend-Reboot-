@@ -33,9 +33,7 @@ export default async function MyAddedCars() {
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">
               Your fleet
             </p>
-            <h1 className="text-3xl font-black tracking-tight md:text-4xl">
-              My Added Cars
-            </h1>
+            <h1>My Added Cars</h1>
             <p className="text-muted-foreground">
               Manage your listings, availability, and vehicle details.
             </p>
@@ -51,9 +49,7 @@ export default async function MyAddedCars() {
               <CarFront className="size-8" />
             </span>
             <div className="space-y-2">
-              <h2 className="text-xl font-bold">
-                You have not added any cars yet
-              </h2>
+              <h2 className="card-title">You have not added any cars yet</h2>
               <p className="max-w-md text-sm text-muted-foreground">
                 Add your first vehicle to start sharing it with DriveFleet
                 renters.
@@ -96,7 +92,7 @@ export default async function MyAddedCars() {
                       href={`/explore-cars/${car._id}`}
                       className="w-fit transition-colors hover:text-accent"
                     >
-                      <Card.Title className="text-xl">{car.name}</Card.Title>
+                      <Card.Title className="card-title">{car.name}</Card.Title>
                     </Link>
                     <Card.Description>{car.type}</Card.Description>
                   </Card.Header>

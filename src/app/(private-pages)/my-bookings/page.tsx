@@ -29,9 +29,7 @@ const MyBookings = async () => {
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">
             Your rentals
           </p>
-          <h1 className="text-3xl font-black tracking-tight md:text-4xl">
-            My Bookings
-          </h1>
+          <h1>My Bookings</h1>
           <p className="text-muted-foreground">
             View your booked cars, with your most recent booking first.
           </p>
@@ -43,7 +41,7 @@ const MyBookings = async () => {
               <CarFront className="size-8" />
             </span>
             <div className="space-y-2">
-              <h2 className="text-xl font-bold">No bookings yet</h2>
+              <h2 className="card-title">No bookings yet</h2>
               <p className="max-w-md text-sm text-muted-foreground">
                 Your booked cars will appear here. Explore the fleet to find the
                 right car for your next journey.

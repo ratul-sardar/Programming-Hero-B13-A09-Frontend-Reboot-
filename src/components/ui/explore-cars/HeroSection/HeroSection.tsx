@@ -24,7 +24,7 @@ export default function HeroSection() {
             <span className="text-accent"> Ride</span>
           </h1>
 
-          <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
+          <p className="max-w-xl text-left text-lg leading-relaxed text-muted-foreground">
             Browse our curated fleet of luxury, SUV, sports, and everyday
             vehicles. Transparent pricing, instant booking, and 24/7 support for
             every journey.
