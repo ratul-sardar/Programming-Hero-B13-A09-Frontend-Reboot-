@@ -1,6 +1,7 @@
 # Drive Fleet — Frontend
 
-**Live site:** Not deployed yet — add the production URL here when available.
+**Live site:** [https://programming-hero-b13-a09-frontend-r.vercel.app/](https://programming-hero-b13-a09-frontend-r.vercel.app/)  
+**GitHub:** [Programming-Hero-B13-A09-Frontend-Reboot](https://github.com/ratul-sardar/Programming-Hero-B13-A09-Frontend-Reboot-)
 
 Drive Fleet is a car-rental web application for discovering vehicles, viewing listing details, and managing bookings. This repository contains the customer-facing Next.js application and its Better Auth integration.
 
@@ -44,15 +45,15 @@ bun run start
 Create a `.env.local` file in this frontend directory. Use the appropriate local or deployed values; never commit secrets.
 
 ```env
-NEXT_PUBLIC_SERVER_URI=http://localhost:8001/api/v1
+NEXT_PUBLIC_SERVER_URI=http://localhost:8800/api/v1
 MONGODB_URI=mongodb://localhost:27017/drive-fleet
 BETTER_AUTH_URL=http://localhost:3888
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 ```
 
-`NEXT_PUBLIC_SERVER_URI` must include the API prefix (`/api/v1`). Configure a MongoDB connection string and Google OAuth credentials appropriate for your environment.
+`NEXT_PUBLIC_SERVER_URI` must include the API prefix (`/api/v1`). For production, set it to `https://programming-hero-b13-a09-backend-reboot.onrender.com/api/v1`. Set `BETTER_AUTH_URL` to the deployed frontend origin (`https://programming-hero-b13-a09-frontend-r.vercel.app`) in production. Configure a MongoDB connection string and Google OAuth credentials appropriate for your environment; never commit secrets.
 
 ## Related project
 
-The REST API is maintained in [`../programming-hero-b13-a09-backend-reboot`](../programming-hero-b13-a09-backend-reboot/README.md).
+The REST API is maintained in the [backend GitHub repository](https://github.com/ratul-sardar/Programming-Hero-B13-A09-Backend-Reboot) and is [deployed on Render](https://programming-hero-b13-a09-backend-reboot.onrender.com).
