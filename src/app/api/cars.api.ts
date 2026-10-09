@@ -36,10 +36,15 @@ export const getCars = async (search?: string, type?: string) => {
 	}
 };
 
-export const getUserAddedCars = async (userId: string) => {
+export const getUserAddedCars = async (userId: string, JWTToken: string) => {
 	try {
 		const res = await fetch(
 			`${process.env.NEXT_PUBLIC_SERVER_URI}/cars/user-added-cars/${userId}`,
+			{
+				headers: {
+					Authorization: `Bearer ${JWTToken}`,
+				},
+			},
 		);
 		if (!res.ok) {
 			throw new Error(`cars.api.ts response was not ok :(`);
@@ -53,9 +58,12 @@ export const getUserAddedCars = async (userId: string) => {
 	}
 };
 
-export const deleteCar = async (id: string) => {
+export const deleteCar = async (id: string, JWTToken: string) => {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/cars/${id}`, {
 		method: "DELETE",
+		headers: {
+			Authorization: `Bearer ${JWTToken}`,
+		},
 	});
 
 	if (!res.ok) {

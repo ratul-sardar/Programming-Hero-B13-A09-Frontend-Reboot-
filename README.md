@@ -1,37 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Drive Fleet — Frontend
 
-## Getting Started
+**Live site:** Not deployed yet — add the production URL here when available.
 
-First, run the development server:
+Drive Fleet is a car-rental web application for discovering vehicles, viewing listing details, and managing bookings. This repository contains the customer-facing Next.js application and its Better Auth integration.
+
+## Features
+
+- Browse the available vehicle fleet and search/filter cars.
+- View vehicle details, daily pricing, capacity, pickup location, and availability.
+- Create an account and sign in with email/password or Google using Better Auth.
+- Add, update, and delete vehicle listings (for authenticated users).
+- Book cars and view/manage bookings.
+- Responsive homepage with featured cars, informational sections, and FAQs.
+- JWT plugin configured for authenticated API token access.
+
+## Tech stack
+
+- Next.js 16 (App Router), React 19, and TypeScript
+- HeroUI and Tailwind CSS 4
+- Better Auth with MongoDB adapter and JWT plugin
+- MongoDB-backed Express API (see the backend README)
+
+## Local development
+
+Prerequisites: Bun 1.4+ and a running backend/MongoDB configuration.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3888](http://localhost:3888).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To create a production build:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+bun run build
+bun run start
+```
 
-## Learn More
+## Environment variables
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file in this frontend directory. Use the appropriate local or deployed values; never commit secrets.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+NEXT_PUBLIC_SERVER_URI=http://localhost:8001/api/v1
+MONGODB_URI=mongodb://localhost:27017/drive-fleet
+BETTER_AUTH_URL=http://localhost:3888
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`NEXT_PUBLIC_SERVER_URI` must include the API prefix (`/api/v1`). Configure a MongoDB connection string and Google OAuth credentials appropriate for your environment.
 
-## Deploy on Vercel
+## Related project
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Programming-Hero-B13-A09-Frontend-Reboot-
+The REST API is maintained in [`../programming-hero-b13-a09-backend-reboot`](../programming-hero-b13-a09-backend-reboot/README.md).

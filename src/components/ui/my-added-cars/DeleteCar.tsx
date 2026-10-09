@@ -7,14 +7,15 @@ import { deleteCar } from "@/app/api/cars.api";
 
 type propsType = {
 	id: string;
+	JWTToken: string;
 	children: React.ReactNode;
 };
 
-export default function DeleteCar({ id, children }: propsType) {
+export default function DeleteCar({ id, JWTToken, children }: propsType) {
 	const router = useRouter();
 
-	async function deleteThisCar(id: string) {
-		deleteCar(id);
+	async function deleteThisCar(id: string, JWTToken: string) {
+		deleteCar(id, JWTToken);
 		router.refresh();
 	}
 
@@ -41,7 +42,7 @@ export default function DeleteCar({ id, children }: propsType) {
 								className="w-full"
 								slot="close"
 								variant="danger"
-								onClick={() => deleteThisCar(id)}
+								onClick={() => deleteThisCar(id, JWTToken)}
 							>
 								Continue
 							</Button>
