@@ -129,7 +129,7 @@ export default async function MyAddedCars() {
 											</span>
 										</div>
 										<div className="flex w-full gap-3">
-											<EditCarsModal id={car._id} />
+											<EditCarsModal id={car._id} JWTToken={JWTToken} />
 											<DeleteCar id={car._id} JWTToken={JWTToken}>
 												Delete
 											</DeleteCar>

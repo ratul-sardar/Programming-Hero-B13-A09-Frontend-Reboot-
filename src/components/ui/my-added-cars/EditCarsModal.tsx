@@ -16,21 +16,31 @@ import {
 	TextField,
 } from "@heroui/react";
 import { MapPin } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { updateCar } from "@/lib/actions/updateCar";
 // import {Button, Input, Label, Modal, Surface, TextField} from "@heroui/react";
 
-export function EditCarsModal({ id }: { id: string }) {
+export function EditCarsModal({
+	id,
+	JWTToken,
+}: {
+	id: string;
+	JWTToken: string;
+}) {
+	const router = useRouter();
+
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
-		// console.log(formData.entries().toArray());
 
 		try {
-			const result = await updateCar(formData, id);
+			const result = await updateCar(formData, id, JWTToken);
+			if (!result) throw new Error("Failed to update car info");
+
 			toast.success("Car info updated successfully!");
 			e.target.reset();
-			console.log(result);
+			router.refresh();
 		} catch (error: any) {
 			toast.error(error.message || "Failed to update car info");
 		}
@@ -108,10 +118,11 @@ export function EditCarsModal({ id }: { id: string }) {
 									</Select>
 
 									{/* Photo Url */}
-									<TextField name="imageURL" type="text">
+									<TextField name="imageURL" type="url">
 										<Label>Photo Url</Label>
 										<Input
 											placeholder={`https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`}
+											type="url"
 										/>
 									</TextField>
 
