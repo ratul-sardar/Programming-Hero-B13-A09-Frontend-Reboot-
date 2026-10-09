@@ -1,29 +1,29 @@
 "use server";
 
 export async function updateCar(
-	formData: FormData,
-	id: string,
-	JWTToken: string,
+  formData: FormData,
+  id: string,
+  JWTToken: string,
 ) {
-	const form = Object.fromEntries(formData);
-	const now = new Date().toISOString();
+  const form = Object.fromEntries(formData);
+  const now = new Date().toISOString();
 
-	const payload: Partial<typeof form> = {};
+  const payload: Partial<typeof form> = {};
 
-	Object.entries(form).forEach(([key, value]) => {
-		if (value) payload[key] = value;
-	});
-	payload.updatedAt = now;
+  Object.entries(form).forEach(([key, value]) => {
+    if (value) payload[key] = value;
+  });
+  payload.updatedAt = now;
 
-	const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/cars/${id}`, {
-		method: "PATCH",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${JWTToken}`,
-		},
-		body: JSON.stringify(payload),
-	});
-	const data = await res.json();
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/cars/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${JWTToken}`,
+    },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
 
-	return data;
+  return data;
 }

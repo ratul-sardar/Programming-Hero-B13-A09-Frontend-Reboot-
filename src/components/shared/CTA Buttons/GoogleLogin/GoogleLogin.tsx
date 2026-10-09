@@ -12,7 +12,7 @@ export default function GoogleLogin() {
   const handleLogin = async () => {
     setLoading(true);
 
-    const data = await authClient.signIn.social({
+    await authClient.signIn.social({
       provider: "google",
     });
 

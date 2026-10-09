@@ -1,9 +1,10 @@
 import { Button } from "@heroui/react";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 type propsType = {
-  link: string;
-  children: string;
+  link?: string;
+  children: ReactNode;
   className: string;
   fullWidth?: boolean;
   isDisabled?: boolean;
