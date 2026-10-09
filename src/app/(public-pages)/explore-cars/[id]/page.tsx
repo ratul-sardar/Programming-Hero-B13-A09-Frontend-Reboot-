@@ -1,16 +1,20 @@
 import { ArrowLeft, CalendarDays, Check, MapPin, Users, X } from "lucide-react";
+import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { carsType } from "@/app/api/cars.api";
 import BookingForm from "@/components/ui/explore-cars/BookingForm/BookingForm";
-import { authClient } from "@/lib/auth-client";
+import { auth } from "@/lib/auth";
 
-export default async function CarDetails({
-	params,
-}: {
+type PropsType = {
 	params: Promise<{ id: string }>;
-}) {
+};
+
+export default async function CarDetails({ params }: PropsType) {
+	const JWT = await auth.api.getToken({ headers: await headers() });
+	const JWTToken = JWT?.token as string;
+
 	const { id } = await params;
 	let car: carsType;
 
@@ -24,19 +28,6 @@ export default async function CarDetails({
 		car = await response.json();
 	} catch {
 		notFound();
-	}
-
-	//
-	//JWT Token test
-	const { data, error } = await authClient.token();
-	if (error) {
-		// handle error
-		console.log(error);
-	}
-	if (data) {
-		const jwtToken = data.token;
-		console.log(jwtToken);
-		// Use this token for authenticated requests to external services
 	}
 
 	return (
@@ -118,7 +109,7 @@ export default async function CarDetails({
 							/>
 						</div>
 
-						<BookingForm car={car} />
+						<BookingForm car={car} JWTToken={JWTToken} />
 					</aside>
 				</div>
 			</div>

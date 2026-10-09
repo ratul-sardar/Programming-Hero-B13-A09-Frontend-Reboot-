@@ -15,13 +15,15 @@ type BookingDialogProps = {
 	close: () => void;
 	userId: string;
 	router: AppRouterInstance;
+	JWTToken: string;
 };
 
 type BookingFormProps = {
 	car: carsType;
+	JWTToken: string;
 };
 
-export default function BookingForm({ car }: BookingFormProps) {
+export default function BookingForm({ car, JWTToken }: BookingFormProps) {
 	const router = useRouter();
 	const { data: session, isPending: isSessionLoading } =
 		authClient.useSession();
@@ -65,6 +67,7 @@ export default function BookingForm({ car }: BookingFormProps) {
 								close={close}
 								userId={session.user.id}
 								router={router}
+								JWTToken={JWTToken}
 							/>
 						)}
 					</Modal.Dialog>
@@ -74,7 +77,13 @@ export default function BookingForm({ car }: BookingFormProps) {
 	);
 }
 
-function BookingDialog({ car, close, userId, router }: BookingDialogProps) {
+function BookingDialog({
+	car,
+	close,
+	userId,
+	router,
+	JWTToken,
+}: BookingDialogProps) {
 	const [driverNeeded, setDriverNeeded] = useState(false);
 	const [specialNote, setSpecialNote] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -84,14 +93,17 @@ function BookingDialog({ car, close, userId, router }: BookingDialogProps) {
 		setIsSubmitting(true);
 
 		try {
-			await bookCar({
-				userId,
-				carId: car._id,
-				driverNeeded,
-				specialNote: specialNote.trim(),
-				carDetails: car,
-				bookingDate: new Date().toString(),
-			});
+			await bookCar(
+				{
+					userId,
+					carId: car._id,
+					driverNeeded,
+					specialNote: specialNote.trim(),
+					carDetails: car,
+					bookingDate: new Date().toString(),
+				},
+				JWTToken,
+			);
 			toast.success("Your car booking has been created!");
 			close();
 			router.refresh();
